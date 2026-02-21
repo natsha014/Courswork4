@@ -2,13 +2,21 @@
 name = "pythoncourswork4"
 version = "0.1.0"
 description = ""
-authors = ["Your Name <you@example.com>"]
+authors = ["Natalya Sharova <nat_sha10@mail.ru>"]
+
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.13"
 django = "^6.0.2"
+python-dotenv = "^1.2.1"
+psycopg2 = "^2.9.11"
+pillow = "^12.1.1"
+django-redis = "^6.0.0"
 
+
+[tool.poetry.group.lint.dependencies]
+flake8 = "^7.3.0"
 
 [build-system]
 requires = ["poetry-core"]

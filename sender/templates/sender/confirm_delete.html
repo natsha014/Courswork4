@@ -1,0 +1,19 @@
+<!-- sender/templates/sender/confirm_delete.html -->
+{% extends 'sender/base.html' %}
+
+{% block title %}Сервис рассылок{% endblock %}
+
+{% block content %}
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">Действительно ли вы хотите удалить {{ object }}?</h1>
+    <form method="post">
+        {% csrf_token %}
+
+        <button type="submit" class="btn btn-danger">Удалить</button>
+        <a href="javascript:history.back()" class="btn btn-primary">Отмена</a>
+    </form>
+</div>
+<script src="/static/js/bootstrap.bundle.min.js"></script>
+</body>
+{% endblock %}

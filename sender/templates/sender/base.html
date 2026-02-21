@@ -1,0 +1,52 @@
+<!-- sender/templates/sender/base.html -->
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Сервис рассылок{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+
+<body>
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <!-- Логотип -->
+    <h5 class="my-0 font-weight-normal">
+        <a class="text-dark text-decoration-none">MailingService</a>
+    </h5>
+
+    <nav class="ms-4">
+        <a class="p-2 text-dark text-decoration-none" href="{% url 'sender:main' %}">Главная</a>
+        {% if user.is_authenticated %}
+        <a class="p-2 text-dark text-decoration-none" href="{% url 'sender:mailing_list' %}">Рассылки</a>
+        <a class="p-2 text-dark text-decoration-none" href="{% url 'sender:message_list' %}">Сообщения</a>
+        <a class="p-2 text-dark text-decoration-none" href="{% url 'sender:client_list' %}">Клиенты</a>
+        <a class="p-2 text-dark text-decoration-none" href="{% url 'sender:log_list' %}">Отчеты</a>
+        {% if perms.users.view_user %}
+        <a class="p-2 text-primary fw-bold text-decoration-none" href="{% url 'users:user_list' %}">Пользователи</a>
+        {% endif %}
+        {% endif %}
+    </nav>
+
+    <nav class="ms-auto d-flex align-items-center">
+        {% if user.is_authenticated %}
+        <span class="text-muted me-3 small">{{ user.email }}</span>
+        <form action="{% url 'users:logout' %}" method="post" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm btn-outline-danger">Выйти</button>
+        </form>
+        {% else %}
+        <a class="btn btn-sm btn-outline-primary me-2" href="{% url 'users:login' %}">Войти</a>
+        <a class="btn btn-sm btn-primary" href="{% url 'users:register' %}">Регистрация</a>
+        {% endif %}
+    </nav>
+</div>
+
+<div class="container">
+    {% block content %}{% endblock %}
+</div>
+
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

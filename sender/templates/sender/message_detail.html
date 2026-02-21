@@ -1,0 +1,31 @@
+<!-- sender/templates/sender/message_detail.html -->
+{% extends 'sender/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="display-4">Сообщение</h1>
+    </div>
+    <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-header d-flex justify-content-between">
+                <small class="text-muted">ID: {{ message.id }}</small>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title text-truncate">Тема: {{ message.subject }}</h5>
+                <p class="card-text text-muted small">
+                    Содержание: {{ message.body}}
+                </p>
+                <h6>Владелец: {{ message.owner }}</h6>
+            </div>
+            <div class="card-footer bg-transparent border-top-0 pb-3">
+                {% if user.is_superuser or user == message.owner %}
+                <a href="{% url 'sender:message_update' message.pk %}" class="btn btn-secondary">Редактировать</a>
+                <a href="{% url 'sender:message_delete' message.pk %}" class="btn btn-danger">Удалить</a>
+                {% endif %}
+                <a href="{% url 'sender:message_list' %}" class="btn btn-primary">Назад</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
