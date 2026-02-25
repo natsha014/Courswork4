@@ -32,6 +32,7 @@
     <nav class="ms-auto d-flex align-items-center">
         {% if user.is_authenticated %}
         <span class="text-muted me-3 small">{{ user.email }}</span>
+        <a class="p-2 text-dark text-decoration-none" href="{% url 'users:profile' %}">Профиль</a>
         <form action="{% url 'users:logout' %}" method="post" class="d-inline">
             {% csrf_token %}
             <button type="submit" class="btn btn-sm btn-outline-danger">Выйти</button>

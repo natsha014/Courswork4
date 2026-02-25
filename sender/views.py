@@ -147,7 +147,7 @@ class MailingDeleteView(LoginRequiredMixin, OwnerQuerySetMixin, DeleteView):
     success_url = reverse_lazy('sender:mailing_list')
 
 
-class LogListView(ListView):
+class LogListView(LoginRequiredMixin, ListView):
     model = Log
     template_name = 'sender/log_list.html'
 

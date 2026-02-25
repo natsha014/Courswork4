@@ -15,10 +15,6 @@
                     {{ client.comment|truncatechars:100 }}
                 </p>
                 <h6>Владелец: {{ client.owner }}</h6>
-                {% if user.is_superuser or user == client.owner %}
-                <a href="{% url 'sender:client_update' client.pk %}" class="btn btn-secondary">Редактировать</a>
-                <a href="{% url 'sender:client_delete' client.pk %}" class="btn btn-danger">Удалить</a>
-                {% endif %}
                 <a href="{% url 'sender:client_list' %}" class="btn btn-primary">Назад</a>
             </div>
         </div>

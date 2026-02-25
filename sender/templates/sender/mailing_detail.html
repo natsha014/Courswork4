@@ -14,7 +14,7 @@
         <div class="col-md-6">
             <h1>Рассылка №{{ object.pk }}</h1>
             <hr>
-            {% if user == object.owner or user.is_staff %}
+            {% if user == mailing.owner or user.is_superuser %}
             <a href="{% url 'sender:start_mailing' object.pk %}" class="btn btn-success">
                 🚀 Запустить сейчас
             </a>

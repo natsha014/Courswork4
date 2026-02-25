@@ -10,9 +10,11 @@
         <p class="lead">Эффективное управление вашими рассылками в одном месте.</p>
 
         {% if user.is_authenticated %}
+        {% if not perms.sender.can_view_any_mailing or user.is_superuser %}
         <a href="{% url 'sender:mailing_create' %}" class="btn btn-lg btn-primary shadow-sm">Создать новую рассылку</a>
         {% else %}
         <p class="text-muted">Войдите в систему, чтобы начать работу.</p>
+        {% endif %}
         {% endif %}
     </div>
 

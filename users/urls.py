@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth.views import LoginView, LogoutView
-from .views import RegisterView, toggle_user_active, UserListView
+from .views import RegisterView, toggle_user_active, UserListView, ProfileView, ProfileEditView
 from users.apps import UsersConfig
 
 app_name = UsersConfig.name
@@ -12,4 +12,6 @@ urlpatterns = [
     path('user/toggle/<int:pk>/', toggle_user_active, name='toggle_user'),
     path('list/', UserListView.as_view(), name='user_list'),
     path('toggle-active/<int:pk>/', toggle_user_active, name='toggle_user'),
+    path('profile/', ProfileView.as_view(), name='profile'),
+    path('profile/edit/', ProfileEditView.as_view(), name='profile_edit'),
 ]
