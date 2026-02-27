@@ -35,7 +35,7 @@ class OwnerQuerySetMixin:
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        if self.request.user.has_perm('sender.can_view_any_mailing'):
+        if self.request.user.is_superuser:
             return queryset
         return queryset.filter(owner=self.request.user)
 
@@ -48,11 +48,22 @@ class OwnerFormValidMixin:
         return super().form_valid(form)
 
 
-class ClientListView(LoginRequiredMixin, OwnerQuerySetMixin, ListView):
+class ManagerListDetailMixin:
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        user = self.request.user
+        if user.is_superuser or user.has_perm('sender.view_all_messages') or \
+                user.has_perm('sender.view_all_clients') or user.has_perm('sender.can_view_any_mailing'):
+            return queryset
+        return queryset.filter(owner=user)
+
+
+class ClientListView(LoginRequiredMixin, ManagerListDetailMixin, ListView):
     model = Client
 
 
-class ClientDetailView(LoginRequiredMixin, OwnerQuerySetMixin, DetailView):
+class ClientDetailView(LoginRequiredMixin, ManagerListDetailMixin, DetailView):
     model = Client
 
 
@@ -76,11 +87,11 @@ class ClientDeleteView(LoginRequiredMixin, OwnerQuerySetMixin, DeleteView):
     success_url = reverse_lazy('sender:client_list')
 
 
-class MessageListView(LoginRequiredMixin, OwnerQuerySetMixin, ListView):
+class MessageListView(LoginRequiredMixin, ManagerListDetailMixin, ListView):
     model = Message
 
 
-class MessageDetailView(LoginRequiredMixin, OwnerQuerySetMixin, DetailView):
+class MessageDetailView(LoginRequiredMixin, ManagerListDetailMixin, DetailView):
     model = Message
 
 
@@ -104,11 +115,11 @@ class MessageDeleteView(LoginRequiredMixin, OwnerQuerySetMixin, DeleteView):
     success_url = reverse_lazy('sender:message_list')
 
 
-class MailingListView(LoginRequiredMixin, OwnerQuerySetMixin, ListView):
+class MailingListView(LoginRequiredMixin, ManagerListDetailMixin, ListView):
     model = Mailing
 
 
-class MailingDetailView(LoginRequiredMixin, OwnerQuerySetMixin, DetailView):
+class MailingDetailView(LoginRequiredMixin, ManagerListDetailMixin, DetailView):
     model = Mailing
 
     def get_object(self, queryset=None):
