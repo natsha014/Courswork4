@@ -1,0 +1,14 @@
+<!-- users/templates/users/profile_detail.html -->
+{% extends 'sender/base.html' %}
+{% block content %}
+<div class="card mx-auto" style="width: 18rem;">
+    {% if user.avatar %}
+    <img src="{{ user.avatar.url }}" class="card-img-top">
+    {% endif %}
+    <div class="card-body text-center">
+        <h5>{{ user.email }}</h5>
+        <p>{{ user.get_full_name }}</p>
+        <a href="{% url 'users:profile_edit' %}" class="btn btn-primary">Редактировать</a>
+    </div>
+</div>
+{% endblock %}

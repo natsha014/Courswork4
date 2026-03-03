@@ -1,0 +1,35 @@
+<!-- sender/templates/sender/log_list.html -->
+{% extends 'sender/base.html' %}
+
+{% block content %}
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Дата</th>
+        <th>Рассылка (Тема)</th>
+        <th>Статус</th>
+        <th>Ответ сервера</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for log in object_list %}
+    <tr>
+        <td>{{ log.created_at|date:"d.m.Y H:i" }}</td>
+        <td>{{ log.mailing.message.subject }}</td>
+        <td>
+            {% if log.status == 'success' %}
+            <span class="badge bg-success">Успешно</span>
+            {% else %}
+            <span class="badge bg-danger">Ошибка</span>
+            {% endif %}
+        </td>
+        <td>{{ log.server_response|default:"-" }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="4">Попыток отправки еще не было.</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

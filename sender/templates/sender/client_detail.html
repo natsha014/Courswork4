@@ -1,0 +1,23 @@
+<!-- sender/templates/sender/client_detail.html -->
+{% extends 'sender/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">Клиент</h1>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h4 class="card-title">{{ client.email }}</h4>
+                <h6>ФИО: {{ client.first_name }} {{ client.surname }} {{ client.last_name }} </h6>
+                <p class="card-text text-muted small">
+                    {{ client.comment|truncatechars:100 }}
+                </p>
+                <h6>Владелец: {{ client.owner }}</h6>
+                <a href="{% url 'sender:client_list' %}" class="btn btn-primary">Назад</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

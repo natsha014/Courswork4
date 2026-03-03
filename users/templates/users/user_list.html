@@ -1,0 +1,45 @@
+<!-- users/templates/users/user_list.html -->
+{% extends 'sender/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Управление пользователями</h1>
+    <table class="table table-hover border shadow-sm">
+        <thead class="table-dark">
+        <tr>
+            <th>Email</th>
+            <th>Имя Фамилия</th>
+            <th>Статус</th>
+            <th>Действие</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in object_list %}
+        <tr>
+            <td>{{ user.email }}</td>
+            <td>{{ user.first_name }} {{ user.last_name }}</td>
+            <td>
+                {% if user.is_active %}
+                <span class="badge bg-success">Активен</span>
+                {% else %}
+                <span class="badge bg-danger">Заблокирован</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if perms.users.can_block_user %}
+                {% if not user.is_superuser %}
+                <a href="{% url 'users:toggle_user' user.pk %}"
+                   class="btn btn-sm {% if user.is_active %}btn-outline-danger{% else %}btn-outline-success{% endif %}">
+                    {% if user.is_active %}Блокировать{% else %}Разблокировать{% endif %}
+                </a>
+                {% else %}
+                <span class="text-muted small">Админ</span>
+                {% endif %}
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
